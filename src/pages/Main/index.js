@@ -11,6 +11,10 @@ import {
     Count
 } from "./styles";
 
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import PodcastsActions from "~/store/ducks/podcasts";
+
 const podcasts = [
     {
         id: 1,
@@ -249,21 +253,27 @@ const podcasts = [
     }
 ];
 
-export default class Main extends Component {
-    componentDidMount() {}
+class Main extends Component {
+    componentDidMount() {
+        const { loadRequest } = this.props;
+        loadRequest();
+    }
     render() {
+        const { podcasts } = this.props;
         return (
             <Container>
                 <PodcastList
                     ListHeaderComponent={() => <PageTitle>Podcast</PageTitle>}
-                    data={podcasts}
+                    data={podcasts.data}
                     keyExtractor={podcast => String(podcast.id)}
                     renderItem={({ item: podcast }) => (
                         <Podcast onPress={() => {}}>
                             <Cover source={{ uri: podcast.cover }} />
                             <Info>
                                 <Title>{podcast.title}</Title>
-                                <Count>{`${podcast.tracks.length} episódios`}</Count>
+                                <Count>{`${
+                                    podcast.tracks.length
+                                } episódios`}</Count>
                             </Info>
                         </Podcast>
                     )}
@@ -272,3 +282,15 @@ export default class Main extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    podcasts: state.podcasts
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(PodcastsActions, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Main);

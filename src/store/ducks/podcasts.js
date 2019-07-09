@@ -11,7 +11,7 @@ const { Types, Creators } = createActions({
     loadFailure: null
 });
 
-export const PodcastTypes = Types;
+export const PodcastsTypes = Types;
 export default Creators;
 
 /**

@@ -1,10 +1,8 @@
 import { combineReducers } from "redux";
 
-import { reducer as podcats } from "./podcats";
+import { reducer as podcasts } from "./podcasts";
 
-const reducers = combineReducers({
+export default combineReducers({
     // Remova essa linha depois de adicionar seus ducks
-    podcats
+    podcasts
 });
-
-export default reducers;
